@@ -3,7 +3,7 @@ local placeIds = {
     [17017769292] = true
 }
 
-if not placeIds[game.placeId] and TrackerSettings['Webhook'] then
+if not placeIds[game.placeId] and not licenseKey then
     return
 end
 
