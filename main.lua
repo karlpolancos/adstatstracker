@@ -1,15 +1,19 @@
 local placeIds = {
     [17018663967] = true,
-    [17017769292] = true
+    [17017769292] = true,
 }
 
-if not placeIds[game.placeId] and not licenseKey then
+-- Check place ID and license key
+if not placeIds[game.PlaceId] or not getgenv().licenseKey then
+    print('Invalid place ID or missing license key.')
     return
 end
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
+
+local LocalPlayer = Players.LocalPlayer -- Define LocalPlayer
 
 local function safeInvoke(remoteName, ...)
     local remote = ReplicatedStorage.Remotes:FindFirstChild(remoteName)
@@ -20,29 +24,37 @@ local function safeInvoke(remoteName, ...)
     return remote:InvokeServer(...)
 end
 
-function format(number)
+local function format(number)
     local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
     int = int:reverse():gsub("(%d%d%d)", "%1,")
     return minus .. int:reverse():gsub("^,", "") .. fraction
 end
 
-function getStatus()
-    if game.placeId == 17017769292 then
-        return 'In Lobby'
-    elseif game.placeId == 17018663967 then
-
-    end
-end
+print('executed')
 
 updateAccount = function(PlayerStats)
-    (syn and syn.request or http_request or request) {
-        Url = 'https://vkupgraders.cc/updateAccount';
-        Method = 'POST';
-        Headers = {
-            ['Content-Type'] = 'application/json';
-        };
-        Body = HttpService:JSONEncode( { license: getgenv().licenseKey, userId: LocalPlayer.userId, username: LocalPlayer.username, gems: PlayerStats.Gems, gold: PlayerStats.Gold, crystal: PlayerStats.TraitCrystal, dice: PlayerStats.RiskyDice, frostbind: PlayerStats.FrostBind } );
-    };
+    local requestFunction = syn and syn.request or http_request or request
+    if requestFunction then
+        requestFunction({
+            Url = 'https://vkupgraders.cc/updateAccount',
+            Method = 'POST',
+            Headers = {
+                ['Content-Type'] = 'application/json'
+            },
+            Body = HttpService:JSONEncode({
+                license = getgenv().licenseKey,
+                userId = LocalPlayer.UserId,
+                username = LocalPlayer.Name,
+                gems = PlayerStats.Gems,
+                gold = PlayerStats.Gold,
+                crystal = PlayerStats.TraitCrystal,
+                dice = PlayerStats.RiskyDice,
+                frostbind = PlayerStats.FrostBind
+            })
+        })
+    else
+        warn('No valid request function found.')
+    end
 end
 
 while task.wait(10) do
@@ -58,7 +70,7 @@ while task.wait(10) do
         Level = inventoryResult.Level,
         XP = inventoryResult.XP,
         TraitCrystal = inventoryResult.Items["Trait Crystal"] and inventoryResult.Items["Trait Crystal"] or 0,
-        RiskyRice = inventoryResult.Items["Risky Dice"] and inventoryResult.Items["Risky Dice"] or 0,
+        RiskyDice = inventoryResult.Items["Risky Dice"] and inventoryResult.Items["Risky Dice"] or 0,
         FrostBind = inventoryResult.Items["Frost Bind"] and inventoryResult.Items["Frost Bind"] or 0,
         Units = {}
     }
