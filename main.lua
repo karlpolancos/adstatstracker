@@ -45,7 +45,7 @@ local function updateWebhook(PlayerStats)
         Headers = {
             ['Content-Type'] = 'application/json';
         };
-        Body = HttpService:JSONEncode( { webhook = TrackSettings.Webhook.URL, response = { embeds = { Embed } } } );
+        Body = HttpService:JSONEncode( { webhook = TrackSettings.Webhook, response = { embeds = { Embed } } } );
     };
 end
 
