@@ -1,3 +1,11 @@
+-- Assuming TrackSettings is defined elsewhere or within a module for better encapsulation
+getgenv().TrackSettings = { 
+    Webhook = {
+        URL = "https://discord.com/api/v10/webhooks/1260951453426516090/I7ybUgCOs2opkNIfVecGCqpJskBOOmIR3Wm8D9DDJWmBpyaIfHOAZCW-zYQY22zu5Ma2/messages/1261109143415296061", -- Webhook Message URL
+        -- MessageURL = "https://discord.com/api/webhooks/I7ybUgCOs2opkNIfVecGCqpJskBOOmIR3Wm8D9DDJWmBpyaIfHOAZCW-zYQY22zu5Ma2/messages/1261109143415296061" -- to update/edit track embed
+    }
+}
+
 local placeIds = {
     [17018663967] = true,
     [17017769292] = true
@@ -22,7 +30,7 @@ end
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/karlpolancos/adstatstracker/main/updatewebhook.lua"))()
 
-while true do
+while task.wait(5) do
     local inventoryResult = safeInvoke("GetInventory")
     if not inventoryResult then
         warn("Failed to retrieve inventory.")
@@ -55,5 +63,4 @@ while true do
     end
 
     updateWebhook(PlayerStats)
-    wait(5) -- Wait for 5 seconds before the next iteration
 end
