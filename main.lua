@@ -55,8 +55,8 @@ while task.wait(5) do
     end
 
     local PlayerStats = {
-        Gold = inventoryResult.Currencies.Gold,
-        Gems = inventoryResult.Currencies.Gems,
+        Gold = inventoryResult.Currencies.Gold or 0,
+        Gems = inventoryResult.Currencies.Gems or 0,
         Level = inventoryResult.Level,
         XP = inventoryResult.XP,
         TraitCrystal = inventoryResult.Items["Trait Crystal"] and inventoryResult.Items["Trait Crystal"] or 0,
