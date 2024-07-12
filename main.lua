@@ -34,38 +34,18 @@ function getStatus()
     end
 end
 
-updateWebhook = function(PlayerStats)
-    local Time = os.date('!*t', os.time())
-    local Embed = {
-        title = 'Anime Defenders Track Stats';
-        color = '1923263';
-        description = "**User**: ||" .. Players.LocalPlayer.Name .. "||\n**Level**: ".. PlayerStats.Level .. " [XP: ".. PlayerStats.XP .. "]";
-        fields = {
-            {
-                name = 'Stats';
-                value = '<:Gems:1261119320038182993> '.. format(PlayerStats.Gems) .. '\n<:Gold:1261119324001665135> '.. format(PlayerStats.Gold) .. '\n<:traitcrystal:1261119321925746728> '.. format(PlayerStats.TraitCrystal) .. '\n <:riskydice:1261122885968461905> '.. format(PlayerStats.RiskyRice) .. '\n<:frostbind:1261122911750721556> '.. format(PlayerStats.FrostBind);
-                inline = true;
-            },
-            {
-                name = 'Status';
-                value = getStatus();
-                inline = true;
-            }
-        };
-        timestamp = string.format('%d-%02d-%02dT%02d:%02d:%02dZ', Time.year, Time.month, Time.day, Time.hour, Time.min, Time.sec);
-    }
-
+updateAccount = function(PlayerStats)
     (syn and syn.request or http_request or request) {
-        Url = 'https://vkupgraders.cc/updatewebhook';
+        Url = 'https://vkupgraders.cc/updateAccount';
         Method = 'POST';
         Headers = {
             ['Content-Type'] = 'application/json';
         };
-        Body = HttpService:JSONEncode( { webhook = TrackerSettings['Webhook'], response = { embeds = { Embed } } } );
+        Body = HttpService:JSONEncode( { license: getgenv().licenseKey, userId: LocalPlayer.userId, username: LocalPlayer.username, gems: PlayerStats.Gems, gold: PlayerStats.Gold, crystal: PlayerStats.TraitCrystal, dice: PlayerStats.RiskyDice, frostbind: PlayerStats.FrostBind } );
     };
 end
 
-while task.wait(TrackerSettings['delay'] or 10) do
+while task.wait(10) do
     local inventoryResult = safeInvoke("GetInventory")
     if not inventoryResult then
         warn("Failed to retrieve inventory.")
@@ -97,5 +77,5 @@ while task.wait(TrackerSettings['delay'] or 10) do
         end
     end
 
-    updateWebhook(PlayerStats)
+    updateAccount(PlayerStats)
 end
