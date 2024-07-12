@@ -20,8 +20,10 @@ local function safeInvoke(remoteName, ...)
     return remote:InvokeServer(...)
 end
 
-local function format(num)
-    string.format("%d", num)
+function format(number)
+    local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
+    int = int:reverse():gsub("(%d%d%d)", "%1,")
+    return minus .. int:reverse():gsub("^,", "") .. fraction
 end
 
 local function updateWebhook(PlayerStats)
