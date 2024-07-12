@@ -26,16 +26,32 @@ function format(number)
     return minus .. int:reverse():gsub("^,", "") .. fraction
 end
 
-local function updateWebhook(PlayerStats)
+function getStatus()
+    if game.placeId == 17017769292 then
+        return 'In Lobby'
+    elseif game.placeId == 17018663967 then
+
+    end
+end
+
+updateWebhook = function(PlayerStats)
     local Time = os.date('!*t', os.time())
     local Embed = {
         title = 'Anime Defenders Track Stats';
         color = '1923263';
         description = "**User**: ||" .. Players.LocalPlayer.Name .. "||\n**Level**: ".. PlayerStats.Level .. " [XP: ".. PlayerStats.XP .. "]";
-        fields = {{
-            name = 'Stats';
-            value = '<:Gems:1261119320038182993> '.. format(PlayerStats.Gems) .. '\n<:Gold:1261119324001665135> '.. format(PlayerStats.Gold) .. '\n<:traitcrystal:1261119321925746728> '.. format(PlayerStats.TraitCrystal) .. '\n <:riskydice:1261122885968461905> '.. format(PlayerStats.RiskyRice) .. '\n<:frostbind:1261122911750721556> '.. format(PlayerStats.FrostBind);
-        }};
+        fields = {
+            {
+                name = 'Stats';
+                value = '<:Gems:1261119320038182993> '.. format(PlayerStats.Gems) .. '\n<:Gold:1261119324001665135> '.. format(PlayerStats.Gold) .. '\n<:traitcrystal:1261119321925746728> '.. format(PlayerStats.TraitCrystal) .. '\n <:riskydice:1261122885968461905> '.. format(PlayerStats.RiskyRice) .. '\n<:frostbind:1261122911750721556> '.. format(PlayerStats.FrostBind);
+                inline = true;
+            },
+            {
+                name = 'Status';
+                value = getStatus();
+                inline = true;
+            }
+        };
         timestamp = string.format('%d-%02d-%02dT%02d:%02d:%02dZ', Time.year, Time.month, Time.day, Time.hour, Time.min, Time.sec);
     }
 
@@ -49,7 +65,7 @@ local function updateWebhook(PlayerStats)
     };
 end
 
-while task.wait(5) do
+while task.wait(TrackerSettings['delay'] or 10) do
     local inventoryResult = safeInvoke("GetInventory")
     if not inventoryResult then
         warn("Failed to retrieve inventory.")
