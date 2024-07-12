@@ -3,7 +3,7 @@ local placeIds = {
     [17017769292] = true
 }
 
-if not placeIds[game.placeId] then
+if not placeIds[game.placeId] and TrackerSettings['Webhook'] then
     return
 end
 
@@ -45,7 +45,7 @@ local function updateWebhook(PlayerStats)
         Headers = {
             ['Content-Type'] = 'application/json';
         };
-        Body = HttpService:JSONEncode( { webhook = TrackSettings.Webhook, response = { embeds = { Embed } } } );
+        Body = HttpService:JSONEncode( { webhook = TrackerSettings['Webhook'], response = { embeds = { Embed } } } );
     };
 end
 
