@@ -1,11 +1,3 @@
--- Assuming TrackSettings is defined elsewhere or within a module for better encapsulation
-getgenv().TrackSettings = { 
-    Webhook = {
-        URL = "https://discord.com/api/v10/webhooks/1260951453426516090/I7ybUgCOs2opkNIfVecGCqpJskBOOmIR3Wm8D9DDJWmBpyaIfHOAZCW-zYQY22zu5Ma2/messages/1261109143415296061", -- Webhook Message URL
-        -- MessageURL = "https://discord.com/api/webhooks/I7ybUgCOs2opkNIfVecGCqpJskBOOmIR3Wm8D9DDJWmBpyaIfHOAZCW-zYQY22zu5Ma2/messages/1261109143415296061" -- to update/edit track embed
-    }
-}
-
 local placeIds = {
     [17018663967] = true,
     [17017769292] = true
