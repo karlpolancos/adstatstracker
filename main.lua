@@ -36,7 +36,7 @@ updateAccount = function(PlayerStats)
     local requestFunction = syn and syn.request or http_request or request
     if requestFunction then
         requestFunction({
-            Url = 'https://vkupgraders.cc/updateAccount',
+            Url = 'https://panel.moopa.org/api/update-ad',
             Method = 'POST',
             Headers = {
                 ['Content-Type'] = 'application/json'
