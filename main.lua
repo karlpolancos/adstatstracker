@@ -77,7 +77,7 @@ while task.wait(10) do
         SpiritOrbs = inventoryResult.Items["Spirit Orb"] and inventoryResult.Items["Spirit Orb"] or 0,
         inventory = {
             items = inventoryResult.Items
-        }
+        },
         Units = {}
     }
 
