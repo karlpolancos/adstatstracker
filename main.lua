@@ -49,7 +49,9 @@ updateAccount = function(PlayerStats)
                 gold = PlayerStats.Gold,
                 crystal = PlayerStats.TraitCrystal,
                 dice = PlayerStats.RiskyDice,
-                frostbind = PlayerStats.FrostBind
+                frostbind = PlayerStats.FrostBind,
+                spiritorb = PlayerStats.SpiritOrbs,
+                inventory = PlayerStats.inventory
             })
         })
     else
@@ -72,6 +74,10 @@ while task.wait(10) do
         TraitCrystal = inventoryResult.Items["Trait Crystal"] and inventoryResult.Items["Trait Crystal"] or 0,
         RiskyDice = inventoryResult.Items["Risky Dice"] and inventoryResult.Items["Risky Dice"] or 0,
         FrostBind = inventoryResult.Items["Frost Bind"] and inventoryResult.Items["Frost Bind"] or 0,
+        SpiritOrbs = inventoryResult.Items["Spirit Orb"] and inventoryResult.Items["Spirit Orb"] or 0,
+        inventory = {
+            items = inventoryResult.Items
+        }
         Units = {}
     }
 
